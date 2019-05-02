@@ -21,6 +21,13 @@ class App extends Component {
 
   handleScroll = (event) => {
     const { scrolling, totalPages, page } = this.state;
+    if(scrolling) return;
+    if(totalPages <= page) return;
+    const lastLi = document.querySelector('ul.contacts > li:last-child');
+    const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
+    const pageOffset = window.pageYOffset + window.innerHeight;
+    var bottomOffSet = 20;
+    if(pageOffset > lastLiOffset - bottomOffSet) this.loadMore();
   }
 
 
@@ -31,14 +38,19 @@ class App extends Component {
       .get(url)
       .then((res) => {
         console.log(res);
-        this.setState({contacts: [...contacts, ...res.data.contacts]});
+        this.setState({
+          contacts: [...contacts, ...res.data.contacts],
+          scrolling: false,
+          totalPages: res.data.total_pages
+        });
       });
   }
 
-  loadMore = (event) => {
-    event.preventDefault();
+  loadMore = () => {
+    // event.preventDefault();
     this.setState(prevState => ({
-      page: prevState.page + 1
+      page: prevState.page + 1,
+      scrolling: true,
     }), this.loadContacts);
   }
 
@@ -61,7 +73,7 @@ class App extends Component {
             />
           ))}
         </ul>
-        <button onClick={this.loadMore}>Load More</button>
+        {/* <button onClick={this.loadMore}>Load More</button> */}
       </div>
     );
   }
