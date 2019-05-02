@@ -1,5 +1,10 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## A ideia foi criar um infinite scroller sem depender de extensões de fora, e assim, aprender bem mais e ser menos dependente.
+
+## Tecnlogia para comunicar com API utilizada:
+  ### 1. Axios
+  
 ## Available Scripts
 
 In the project directory, you can run:
