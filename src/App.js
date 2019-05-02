@@ -5,25 +5,25 @@ import ContactList from './components/ContactList';
 
 class App extends Component {
   state = {
-    contacts: [],
-    perPage: 8,
+    contacts: [], //array de contatos, que pega as infos da api
+    perPage: 8, //results per page
     page: 1,
     totalPages: null,
     scrolling: false,
   }
 
   componentDidMount() {
-    this.loadContacts();
-    this.scrollListener = window.addEventListener('scroll', (event) => {
+    this.loadContacts(); //carrega os contatos iniciais
+    this.scrollListener = window.addEventListener('scroll', (event) => {//escuta o scroll
       this.handleScroll(event);
     });
   }
 
-  handleScroll = (event) => {
-    const { scrolling, totalPages, page } = this.state;
-    if(scrolling) return;
-    if(totalPages <= page) return;
-    const lastLi = document.querySelector('ul.contacts > li:last-child');
+  handleScroll = () => {
+    const { scrolling, totalPages, page } = this.state; //pega os 3 pra fora do state
+    if(scrolling) return; //se ja está scrollando, retorna true
+    if(totalPages <= page) return; //se o total de páginas é menor ou igual a page
+    const lastLi = document.querySelector('ul.contacts > li:last-child');//pegando o último li
     const lastLiOffset = lastLi.offsetTop + lastLi.clientHeight;
     const pageOffset = window.pageYOffset + window.innerHeight;
     var bottomOffSet = 20;
